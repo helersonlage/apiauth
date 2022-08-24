@@ -13,7 +13,7 @@ namespace apiauth.Services
 
         // public TokenService(ISettings settings) { _settings = settings; }
 
-        public async Task<string> GenerateToken(User user)
+        public async Task<string> GenerateTokenAsync(User user)
         {
 
             var TokenHandler = new JwtSecurityTokenHandler();

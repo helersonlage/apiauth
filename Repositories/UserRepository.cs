@@ -11,7 +11,7 @@ namespace apiauth.Repositories
         /// <param name="username"> user name</param>
         /// <param name="password">password</param>
         /// <returns></returns>
-        public static User Get(string username, string password)
+        public static User? Get(string username, string password)
         {
 
             var users = GetData();
@@ -30,9 +30,9 @@ namespace apiauth.Repositories
 
             return new List<User>() {
 
-                new User(){ UserId = 1, FullName= "Eric Clapton", Name = "Eric@Clapton", Password ="qwertyClapton", Role="Guitarrist" },
+                new User(){ UserId = 1, FullName= "Eric Clapton", Name = "Eric@Clapton", Password ="qwertClapton", Role="Guitarrist" },
                 new User(){ UserId = 2, FullName= "Bono Vox", Name = "Bono@Vox", Password ="qwertyVox", Role="Vocalist" },
-                new User(){ UserId = 2, FullName= "Helerson", Name = "Helerson@Lage", Password ="qwertyLage", Role="Guitarrist" },
+                new User(){ UserId = 2, FullName= "Helerson Lage", Name = "Helerson@Lage", Password ="qwertyLage", Role="Guitarrist" },
 
             };
 

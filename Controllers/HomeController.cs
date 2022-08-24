@@ -9,11 +9,11 @@ namespace apiauth.Controllers
 
         [HttpGet]
         [Route("guitarrist")]
-        [Authorize(Roles =("Guitarrist"))]
+        [Authorize(Roles = ("Guitarrist"))]
 
         public string guitar()
         {
-            return $"Guitar name is {User.Identity?.Name?? String.Empty}";
+            return $"Guitar name is {User.Identity?.Name ?? String.Empty}";
         }
 
 
