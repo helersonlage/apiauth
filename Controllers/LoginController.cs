@@ -1,8 +1,7 @@
-﻿using apiauth.Model;
-using Microsoft.AspNetCore.Mvc;
+﻿using apiauth.Models;
 using apiauth.Repositories;
 using apiauth.Services;
-using apiauth.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace apiauth.Controllers
 {
@@ -17,7 +16,7 @@ namespace apiauth.Controllers
         public async Task<ActionResult<dynamic>> AuthAsync(UserLogin userLogin)
         {
 
-            var user =  UserRepository.Get(userLogin.UserName, userLogin.Password);
+            var user = UserRepository.Get(userLogin.UserName, userLogin.Password);
 
             if (user == null)
             {
@@ -25,7 +24,7 @@ namespace apiauth.Controllers
             }
 
 
-            var token = await new TokenService().GenerateToken(user);
+            var token = await new TokenService().GenerateTokenAsync(user);
 
             //TODO map to a new userView without pwd
             user.Password = string.Empty;
@@ -33,8 +32,8 @@ namespace apiauth.Controllers
 
             return new
             {
-                user = user,
-                token = token
+                user,
+                token
             };
         }
 

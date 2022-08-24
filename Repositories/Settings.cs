@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-
-namespace apiauth.Repositories
+﻿namespace apiauth.Repositories
 {
     public class Settings : ISettings
     {
@@ -15,7 +13,7 @@ namespace apiauth.Repositories
             ///new Configuration().
 
             return "HeleRsOnT21pZC1NaXJ6YWVpWhithOutStar*";
-                //_config.GetSection("AppSettings:Token").Value ?? string.Empty;
+            //_config.GetSection("AppSettings:Token").Value ?? string.Empty;
 
         }
 
