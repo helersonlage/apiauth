@@ -11,30 +11,38 @@ namespace apiauth.Controllers
     public class LoginController : ControllerBase
     {
 
+        private readonly ISettings _settings;
+        public LoginController(ISettings settings) { _settings = settings; }
+
+
         [HttpPost]
         [Route("login")]
-        public async Task<ActionResult<dynamic>> AuthAsync(UserLogin userLogin)
+        public ActionResult<dynamic> Auth(UserLogin userLogin)
         {
-
-            var user = UserRepository.Get(userLogin.UserName, userLogin.Password);
-
-            if (user == null)
+            if (string.IsNullOrEmpty(userLogin.UserName) || string.IsNullOrEmpty(userLogin.Password))
             {
                 return BadRequest(new { message = "Invalid user or password." });
             }
 
-
-            var token = await new TokenService().GenerateTokenAsync(user);
-
-            //TODO map to a new userView without pwd
-            user.Password = string.Empty;
+            var user = UserRepository.Get(userLogin.UserName, userLogin.Password);
 
 
-            return new
+            if (user != null)
             {
-                user,
-                token
-            };
+                string token = new TokenService(_settings).GenerateToken(user);
+                user.Password = string.Empty;
+                return new
+                {
+                    user,
+                    token
+                };
+
+            }
+            else
+            {
+                return BadRequest(new { message = "Invalid user or password." });
+            }
+
         }
 
     }

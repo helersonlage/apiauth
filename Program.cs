@@ -4,8 +4,16 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 
+
+
+
 var builder = WebApplication.CreateBuilder(args);
+//builder.Services.AddTransient<IUserRepository, UserRepositorys>();
+builder.Services.AddScoped<ISettings, Settings>();
+
+
 var key = Encoding.ASCII.GetBytes(new Settings().GetSecretKey());
+
 
 builder.Services.AddAuthentication(x =>
 {
@@ -67,16 +75,16 @@ builder.Services.AddSwaggerGen(c =>
 
 
 
-builder.Services.AddScoped<ISettings, Settings>();
+
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
 
 
 app.UseSwaggerUI(options =>

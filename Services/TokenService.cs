@@ -9,34 +9,30 @@ namespace apiauth.Services
 {
     public class TokenService
     {
-        // private readonly ISettings _settings;
+        private readonly ISettings _settings;
+        public TokenService(ISettings settings) { _settings = settings; }
 
-        // public TokenService(ISettings settings) { _settings = settings; }
-
-        public async Task<string> GenerateTokenAsync(User user)
+        public string GenerateToken(User user)
         {
 
             var TokenHandler = new JwtSecurityTokenHandler();
-            var Key = Encoding.ASCII.GetBytes(new Settings().GetSecretKey());
+            var Key = Encoding.ASCII.GetBytes(_settings.GetSecretKey());
 
             var TokenDescriptor = new SecurityTokenDescriptor
             {
 
                 Subject = new ClaimsIdentity(new Claim[] {
 
-                    new Claim(ClaimTypes.Name, user.FullName), //Aspnet User.Identity.Name
-                    new Claim(ClaimTypes.Role, user.Role), // Aspnet.IsInRole
-                   // new Claim(ClaimTypes.Role, "Vocalist"),
-                    
-
+                    new Claim(ClaimTypes.Name, user.FullName?? string.Empty), //Aspnet User.Identity.Name
+                    new Claim(ClaimTypes.Role, user.Role?? string.Empty), // Aspnet.IsInRole
                 }),
 
-                Expires = DateTime.UtcNow.AddHours(8),
+                Expires = DateTime.UtcNow.AddHours(2),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Key), SecurityAlgorithms.HmacSha256Signature)
             };
 
             var token = TokenHandler.CreateToken(TokenDescriptor);
-            return TokenHandler.WriteToken(token);
+            return TokenHandler.WriteToken(token)?? string.Empty;
 
         }
     }
