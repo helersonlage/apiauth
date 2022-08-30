@@ -2,7 +2,7 @@
 
 namespace apiauth.Repositories
 {
-    public class UserRepository
+    public static class UserRepository
     {
 
         /// <summary>
