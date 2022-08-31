@@ -13,11 +13,8 @@ namespace apiauth.Repositories
         /// <returns></returns>
         public static User? Get(string username, string password)
         {
-
             var users = GetData();
-
             return users.FirstOrDefault(u => u.Name == username && u.Password == password);
-
         }
 
 
@@ -27,12 +24,11 @@ namespace apiauth.Repositories
         /// </summary>        
         private static List<User> GetData()
         {
-
             return new List<User>() {
 
                 new User(){ UserId = 1, FullName= "Eric Clapton", Name = "Eric@Clapton", Password ="qwertClapton", Role="Guitarrist" },
                 new User(){ UserId = 2, FullName= "Bono Vox", Name = "Bono@Vox", Password ="qwertyVox", Role="Vocalist" },
-                new User(){ UserId = 2, FullName= "Helerson Lage", Name = "Helerson@Lage", Password ="qwertyLage", Role="Guitarrist" },
+                new User(){ UserId = 3, FullName= "Helerson Lage", Name = "Helerson@Lage", Password ="qwertyLage", Role="Guitarrist" },
 
             };
 

@@ -2,19 +2,17 @@
 {
     public class Settings : ISettings
     {
-        //private readonly IConfiguration _config;
-
-        //public Settings(IConfiguration config) { _config = config; }
-
-        // public Settings() { }
+       /// <summary>
+       /// private readonly IConfiguration _config;
+       /// </summary>
+       /// <returns></returns>
+       // public Settings(IConfiguration config) { _config = config; }
+       // public Settings() { }
 
         public string GetSecretKey()
         {
-            ///new Configuration().
-
+            // Secret Key 
             return "HeleRsOnT21pZC1NaXJ6YWVpWhithOutStar*";
-            //_config.GetSection("AppSettings:Token").Value ?? string.Empty;
-
         }
 
     }

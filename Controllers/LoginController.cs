@@ -12,7 +12,13 @@ namespace apiauth.Controllers
     {
 
         private readonly ISettings _settings;
-        public LoginController(ISettings settings) { _settings = settings; }
+        private readonly ITokenService _tokenService;
+        public LoginController(ISettings settings, ITokenService tokenService)
+        {
+            _settings = settings;
+            _tokenService = tokenService;
+
+        }
 
 
         [HttpPost]
@@ -29,8 +35,9 @@ namespace apiauth.Controllers
 
             if (user != null)
             {
-                string token = new TokenService(_settings).GenerateToken(user);
+                string token = _tokenService.GenerateToken(user);
                 user.Password = string.Empty;
+               
                 return new
                 {
                     user,
