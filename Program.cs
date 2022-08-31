@@ -1,4 +1,5 @@
 using apiauth.Repositories;
+using apiauth.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -6,15 +7,16 @@ using System.Text;
 
 
 
-
 var builder = WebApplication.CreateBuilder(args);
-//builder.Services.AddTransient<IUserRepository, UserRepositorys>();
-builder.Services.AddScoped<ISettings, Settings>();
+
+// Depency Injection Resolver 
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddSingleton<ISettings, Settings>();
 
 
 var key = Encoding.ASCII.GetBytes(new Settings().GetSecretKey());
 
-
+// Authentication 
 builder.Services.AddAuthentication(x =>
 {
     x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -38,8 +40,7 @@ builder.Services.AddAuthentication(x =>
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
-//builder.Services.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "JWTAuthDemo v1"));
+
 
 builder.Services.AddSwaggerGen(c =>
 {

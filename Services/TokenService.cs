@@ -7,7 +7,7 @@ using System.Text;
 
 namespace apiauth.Services
 {
-    public class TokenService
+    public class TokenService : ITokenService
     {
         private readonly ISettings _settings;
         public TokenService(ISettings settings) { _settings = settings; }
@@ -32,7 +32,7 @@ namespace apiauth.Services
             };
 
             var token = TokenHandler.CreateToken(TokenDescriptor);
-            return TokenHandler.WriteToken(token)?? string.Empty;
+            return TokenHandler.WriteToken(token) ?? string.Empty;
 
         }
     }

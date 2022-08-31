@@ -15,19 +15,19 @@ namespace apiauth.Controllers
         [HttpGet]
         [Route("guitarrist")]
         [Authorize(Roles = ("Guitarrist"))]
-        public string Guitar() => $"The guitar name is {User?.Identity?.Name}";
+        public ActionResult<dynamic> Guitar() => $"The guitar name is {User?.Identity?.Name}";
 
 
         [HttpGet]
         [Route("vocalist")]
         [Authorize(Roles = ("Vocalist"))]
-        public string Singer() => $"The singer name is {User?.Identity?.Name}";
+        public ActionResult<dynamic> Singer() => $"The singer name is {User?.Identity?.Name}";
 
 
         [HttpGet]
         [Route("whoami")]
         [Authorize]
-        public string WhoAmI() => $" I am {User?.Identity?.Name}";
+        public ActionResult<dynamic> WhoAmI() => $" I am {User?.Identity?.Name}";
 
 
 
