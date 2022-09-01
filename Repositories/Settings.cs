@@ -1,18 +1,32 @@
-﻿namespace apiauth.Repositories
+﻿
+namespace apiauth.Repositories
 {
+    /// <summary>
+    /// Secret Key Repositories
+    /// </summary>
     public class Settings : ISettings
     {
-       /// <summary>
-       /// private readonly IConfiguration _config;
-       /// </summary>
-       /// <returns></returns>
-       // public Settings(IConfiguration config) { _config = config; }
-       // public Settings() { }
+        protected readonly IConfiguration _configuration;
 
+        /// <summary>
+        /// Dependency Injection Construtor
+        /// </summary>        
+        public Settings(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        /// <summary>
+        /// Get SecretKey from app settings 
+        /// </summary>
+        /// <returns>Secret Key string</returns>
         public string GetSecretKey()
         {
-            // Secret Key 
-            return "HeleRsOnT21pZC1NaXJ6YWVpWhithOutStar*";
+            string SecretKey = _configuration.GetSection("AppSettings:SecretJWTKey").Value;
+
+            if (string.IsNullOrWhiteSpace(SecretKey)) throw new Exception("JWT Secret Key not found. Please Check App Settings");
+
+            return SecretKey;
         }
 
     }

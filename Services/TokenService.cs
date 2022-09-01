@@ -16,15 +16,17 @@ namespace apiauth.Services
         {
 
             var TokenHandler = new JwtSecurityTokenHandler();
+            //Get Secret Key
             var Key = Encoding.ASCII.GetBytes(_settings.GetSecretKey());
 
             var TokenDescriptor = new SecurityTokenDescriptor
             {
 
                 Subject = new ClaimsIdentity(new Claim[] {
-
-                    new Claim(ClaimTypes.Name, user.FullName?? string.Empty), //Aspnet User.Identity.Name
-                    new Claim(ClaimTypes.Role, user.Role?? string.Empty), // Aspnet.IsInRole
+                     //Aspnet User.Identity.Name
+                    new Claim(ClaimTypes.Name, user.FullName?? string.Empty),
+                    // Aspnet.IsInRole
+                    new Claim(ClaimTypes.Role, user.Role?? string.Empty),
                 }),
 
                 Expires = DateTime.UtcNow.AddHours(2),

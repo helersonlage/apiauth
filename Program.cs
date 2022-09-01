@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-
+using Microsoft.Extensions.Configuration;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,10 +13,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddSingleton<ISettings, Settings>();
 
+byte[] Key = Encoding.ASCII.GetBytes(builder.Configuration["AppSettings:SecretJWTKey"]);
 
-var key = Encoding.ASCII.GetBytes(new Settings().GetSecretKey());
 
-// Authentication 
+// JWT Bearer - Authentication &&  Authorization 
 builder.Services.AddAuthentication(x =>
 {
     x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -29,7 +29,7 @@ builder.Services.AddAuthentication(x =>
     x.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = false,
-        IssuerSigningKey = new SymmetricSecurityKey(key),
+        IssuerSigningKey = new SymmetricSecurityKey(Key),
         ValidateIssuerSigningKey = true,
         ValidateAudience = false
     };
@@ -73,9 +73,6 @@ builder.Services.AddSwaggerGen(c =>
     });
 
 });
-
-
-
 
 
 var app = builder.Build();
